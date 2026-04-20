@@ -29,10 +29,6 @@ export class Order extends AggregateRoot<string> {
     }
 
     static create(id: string, props: createOrderProps): Order {
-        if (props.items.length === 0) {
-            throw new Error('Order must have at least one item');
-        }
-
         if (props.items.some(item => item.quantity <= 0)) {
             throw new Error('All order items must have quantity greater than zero');
         }
@@ -42,7 +38,7 @@ export class Order extends AggregateRoot<string> {
         }
 
         if (!props.customerId) {
-            throw new Error('Customer ID is required');
+            throw new Error('customerId is required');
         }
 
         const order = new Order(id, props);
@@ -121,9 +117,10 @@ export class Order extends AggregateRoot<string> {
     }
 
     confirm() {
-        if (this._status !== OrderStatus.PENDING) {
-            throw new Error('Only pending orders can be confirmed');
+        if (this.isEmpty) {
+            throw new Error('Cannot confirm an empty order');
         }
+        assertValidTransition(this._status, OrderStatus.CONFIRMED);
         this._status = OrderStatus.CONFIRMED;
         this._updatedAt = new Date();
         this.addDomainEvent(
@@ -147,12 +144,10 @@ export class Order extends AggregateRoot<string> {
     }
 
     cancel(reason: string) {
-        if (this._status === OrderStatus.CANCELLED) {
-            throw new Error('Order is already cancelled');
+        if (!reason || reason.trim().length === 0) {
+            throw new Error('Cancellation reason is required');
         }
-        if (this._status === OrderStatus.DELIVERED) {
-            throw new Error('Cannot cancel a delivered order');
-        }
+        assertValidTransition(this._status, OrderStatus.CANCELLED);
         this._status = OrderStatus.CANCELLED;
         this._updatedAt = new Date();
         this.addDomainEvent(
