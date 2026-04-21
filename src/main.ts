@@ -11,9 +11,12 @@ import { CreateOrderUseCase } from './application/order/use-cases/CreateOrderUse
 import { ConfirmOrderUseCase } from './application/order/use-cases/ConfirmOrderUseCase.js'
 import { CancelOrderUseCase } from './application/order/use-cases/CancelOrderUseCase.js'
 import { GetOrderUseCase } from './application/order/use-cases/GetOrderUseCase.js'
+import { SqliteOrderRepository } from './infrastructure/persistence/sqllite/SqliteOrderRepository.js'
+import { CreateDatabase } from './infrastructure/persistence/sqllite/database.js'
 
 // ── 1. Infrastructure adapters ────────────────────────
-const orderRepository = new InMemoryOrderRepository()
+const db = CreateDatabase(); // Creates or opens the SQLite database file
+const orderRepository = new SqliteOrderRepository(db);
 const notificationService = new ConsoleNotificationAdapter()
 
 // ── 2. Application use cases ──────────────────────────

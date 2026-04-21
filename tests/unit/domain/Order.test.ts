@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { Order } from '../../../src/domain/order/entities/Order.js'
 import { OrderItem } from '../../../src/domain/order/entities/OrderItem.js'
 import { Money } from '../../../src/domain/order/value-objects/Money.js'
-import { OrderStatus } from '../../../src/domain/order/value-objects/Order-status.js'
+import { OrderStatus } from '../../../src/domain/order/value-objects/OrderStatus.js'
 import {
   OrderConfirmedEvent,
   OrderCancelEvent,

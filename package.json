@@ -9,13 +9,16 @@
     "cli": "tsx src/infrastructure/cli/index.ts"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^4.1.4",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.4"
   },
   "dependencies": {
+    "better-sqlite3": "^12.9.0",
     "express": "^5.2.1"
   }
 }

@@ -19,7 +19,7 @@ export class CreateOrderUseCase {
     async execute(command: CreateOrderCommand): Promise<OrderDTO> {
         // 1. Validate input (application concern)
         if (!command.customerId) {
-            throw new Error('Customer ID is required');
+            throw new Error('customer ID is required');
         }
         if (!command.items || command.items.length === 0) {
             throw new Error('At least one order item is required');

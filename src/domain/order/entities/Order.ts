@@ -1,7 +1,7 @@
 import { OrderItem } from "./OrderItem.js";
 import { OrderCreatedEvent, OrderConfirmedEvent, OrderCancelEvent } from "../events/OrderEvents.js";
 import { AggregateRoot } from "../../shared/AggregateRoot.js";
-import { assertValidTransition, OrderStatus } from "../value-objects/Order-status.js";
+import { assertValidTransition, OrderStatus } from "../value-objects/OrderStatus.js";
 import { Money } from "../value-objects/Money.js";
 
 export interface createOrderProps {
