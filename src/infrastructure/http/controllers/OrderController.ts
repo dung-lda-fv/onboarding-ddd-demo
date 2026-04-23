@@ -3,6 +3,7 @@ import { CreateOrderUseCase } from "../../../application/order/use-cases/CreateO
 import { CancelOrderUseCase } from "../../../application/order/use-cases/CancelOrderUseCase.js";
 import { ConfirmOrderUseCase } from "../../../application/order/use-cases/ConfirmOrderUseCase.js";
 import { GetOrderUseCase } from "../../../application/order/use-cases/GetOrderUseCase.js";
+import { GetOrdersByCustomerUseCase } from "../../../application/order/use-cases/GetOrdersByCustomerUseCase.js";
 
 export class OrderController {
     constructor(
@@ -10,6 +11,7 @@ export class OrderController {
         private readonly cancelOrder: CancelOrderUseCase,
         private readonly confirmOrder: ConfirmOrderUseCase,
         private readonly getOrderById: GetOrderUseCase,
+        private readonly getOrdersByCustomer: GetOrdersByCustomerUseCase,
     ) {}   
     
     async create(req: Request, res: Response): Promise<void> {
@@ -67,7 +69,7 @@ export class OrderController {
     async getByCustomerId(req: Request, res: Response): Promise<void> {
         try {
             const customerId = this.requireSingleParam(req.params.customerId, 'customerId');
-            const result = await this.getOrderById.execute(customerId);
+            const result = await this.getOrdersByCustomer.execute(customerId);
             res.status(200).json(result);
         } catch (error) {
             this.handleError(res, error);

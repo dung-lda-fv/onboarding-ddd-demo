@@ -4,11 +4,17 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "lint": "tsc --noEmit --skipLibCheck",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:smoke": "npx playwright test --project=smoke",
+    "test:e2e": "npx playwright test --project=features",
     "cli": "tsx src/infrastructure/cli/index.ts"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",

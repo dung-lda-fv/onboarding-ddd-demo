@@ -1,4 +1,9 @@
 import express from 'express'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 // Infrastructure — concrete implementations
 import { InMemoryOrderRepository } from './infrastructure/persistence/memory/InMemoryOrderRepository.js'
@@ -11,6 +16,7 @@ import { CreateOrderUseCase } from './application/order/use-cases/CreateOrderUse
 import { ConfirmOrderUseCase } from './application/order/use-cases/ConfirmOrderUseCase.js'
 import { CancelOrderUseCase } from './application/order/use-cases/CancelOrderUseCase.js'
 import { GetOrderUseCase } from './application/order/use-cases/GetOrderUseCase.js'
+import { GetOrdersByCustomerUseCase } from './application/order/use-cases/GetOrdersByCustomerUseCase.js'
 import { SqliteOrderRepository } from './infrastructure/persistence/sqllite/SqliteOrderRepository.js'
 import { CreateDatabase } from './infrastructure/persistence/sqllite/database.js'
 
@@ -24,6 +30,7 @@ const createOrderUseCase = new CreateOrderUseCase(orderRepository)
 const confirmOrderUseCase = new ConfirmOrderUseCase(orderRepository, notificationService)
 const cancelOrderUseCase = new CancelOrderUseCase(orderRepository, notificationService)
 const getOrderUseCase = new GetOrderUseCase(orderRepository)
+const getOrdersByCustomerUseCase = new GetOrdersByCustomerUseCase(orderRepository)
 
 // ── 3. HTTP controller ────────────────────────────────
 const orderController = new OrderController(
@@ -31,11 +38,13 @@ const orderController = new OrderController(
   cancelOrderUseCase,
   confirmOrderUseCase,
   getOrderUseCase,
+  getOrdersByCustomerUseCase,
 )
 
 // ── 4. Express app ────────────────────────────────────
 const app = express()
 app.use(express.json())
+app.use(express.static(join(__dirname, '..', 'public')))
 app.use('/orders', createOrderRouter(orderController))
 
 app.get('/health', (_req, res) => {

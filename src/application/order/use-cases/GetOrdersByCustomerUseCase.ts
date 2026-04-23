@@ -15,9 +15,6 @@ export class GetOrdersByCustomerUseCase {
 
         // 2. Retrieve orders from repository (infrastructure concern — via port)
         const orders = await this.orderRepository.findByCustomerId(customerId);
-        if (!orders || orders.length === 0) {
-            throw new Error('No orders found for this customer');
-        }
 
         // 3. Return DTOs (application concern)
         return orders.map(order => OrderMapper.toDTO(order));

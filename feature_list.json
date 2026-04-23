@@ -1,0 +1,53 @@
+{
+  "project": "Order-management-app",
+  "features": [
+    {
+      "id": "feat-001",
+      "category": "core",
+      "priority": 1,
+      "description": "As a user, I want to be able to order a product so that I can receive the confirm.",
+      "acceptance_criteria": [
+        "Given I am on the product page, when I click 'Order Now', then I should see a confirmation message.",
+        "Confirmation message appears within 2 seconds"
+      ],
+      "test_steps": [
+        "Navigate to the product page order",
+        "Click 'Order Now' button",
+        "Verify: confirmation message is displayed",
+        "Verify: confirmation message appears within 2 seconds"
+      ],
+      "dependencies": [],
+      "estimated_complexity": "high",
+      "passes": false,
+      "last_attempted": null,
+      "evidence": null,
+      "notes": ""
+    },
+    {
+        "id": "feat-002",
+        "category": "core",
+        "priority": 2,
+        "description": "When user click 'Cancel Order' button, the order should be canceled and the status should update to 'Canceled'.",
+        "acceptance_criteria": [
+            "Given I have placed an order, when I click 'Cancel Order' button, then the order should be canceled and the status should update to 'Canceled'",
+            "Status update appears within 2 seconds",
+            "Each order entry shows product name, order date, and status"
+        ],
+        "test_steps": [
+            "Log in to the application",
+            "Navigate to the order history page",
+            "Verify: the order is listed with status 'Pending'",
+            "Click 'Cancel Order' button",
+            "Verify: the order status is updated to 'Canceled'",
+            "Verify: status update appears within 2 seconds",
+            "Verify: each order entry shows product name, order date, and status"  
+        ],
+        "dependencies": ["feat-001"],
+        "estimated_complexity": "medium",
+        "passes": false,
+        "last_attempted": null,
+        "evidence": null,
+        "notes": ""
+    }
+  ]
+}
